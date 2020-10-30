@@ -1,11 +1,22 @@
 <ion-header [translucent]="true" class="ion-no-border">
-    <ion-toolbar>
+    <ion-toolbar color="dark">
         <ion-title>
-            Hello World
+            my tasks
         </ion-title>
     </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" color="dark">
+    <ion-list>
+        <ion-item color="dark" *ngFor="let list of toDoService.toDo" detail>
+            <ion-label>{{list.title}}</ion-label>
+        </ion-item>
+    </ion-list>
+    <!-- fab placed to the top end -->
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="addTask()">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
 
 </ion-content>
