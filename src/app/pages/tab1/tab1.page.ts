@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
+import { AlertController } from "@ionic/angular";
+import { strict } from "assert";
 import { ToDoService } from "src/app/services/to-do.service";
 
 @Component({
@@ -8,8 +10,45 @@ import { ToDoService } from "src/app/services/to-do.service";
   styleUrls: ["tab1.page.scss"],
 })
 export class Tab1Page {
-  constructor(public toDoService: ToDoService, private router: Router) {}
-  addTask() {
-    this.router.navigateByUrl("/tabs/tab1/add");
+  constructor(
+    public toDoService: ToDoService,
+    private router: Router,
+    private alertCtrl: AlertController
+  ) {
+    // this.addTask
+  }
+  async addTask() {
+    const alert = await this.alertCtrl.create({
+      cssClass: "my-custom-class",
+      header: "New Task",
+      inputs: [
+        {
+          name: "title",
+          type: "text",
+          placeholder: "name of the the list",
+        },
+      ],
+      buttons: [
+        {
+          text: "cancel",
+          role: "cancel",
+          handler: () => {
+            console.log("cancel");
+          },
+        },
+        {
+          text: "New List",
+          handler: (data) => {
+            console.log(data);
+            if (data.title.length === 0) {
+              return;
+            }
+            const listId = this.toDoService.createNewList(data.title);
+            this.router.navigateByUrl(`/tabs/tab1/add/${listId}`);
+          },
+        },
+      ],
+    });
+    alert.present();
   }
 }

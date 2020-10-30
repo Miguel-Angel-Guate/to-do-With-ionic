@@ -1,3 +1,4 @@
+import { JsonPipe } from "@angular/common";
 import { Injectable } from "@angular/core";
 import { Lists } from "../models/models.list";
 
@@ -8,8 +9,28 @@ export class ToDoService {
   toDo: Lists[] = [];
 
   constructor() {
-    const list1 = new Lists("resolve problema about her ASIR ");
-    const list2 = new Lists("problem resolved");
-    this.toDo.push(list1, list2);
+    this.runStorage();
+  }
+  createNewList(title: string) {
+    const newList = new Lists(title);
+    this.toDo.push(newList);
+    this.saveStorage();
+    return newList.id;
+  }
+  getList(id: number | string) {
+    id = Number(id);
+    return this.toDo.find((dataList) => {
+      return dataList.id === id;
+    });
+  }
+  saveStorage() {
+    localStorage.setItem("data", JSON.stringify(this.toDo));
+  }
+  runStorage() {
+    if (localStorage.getItem("data")) {
+      this.toDo = JSON.parse(localStorage.getItem("data"));
+    } else {
+      this.toDo = [];
+    }
   }
 }
