@@ -4,6 +4,12 @@
             <ion-label>{{list.title}}</ion-label>
             <ion-note slot="end" color="success">{{list.items.length}} items</ion-note>
         </ion-item>
+        <ion-item-options side="start">
+            <ion-item-option (click)="listEdit(list)">
+                <ion-icon name="create" slot="icon-only"></ion-icon>
+            </ion-item-option>
+
+        </ion-item-options>
         <ion-item-options side="end">
             <ion-item-option (click)="deleteList( list)">Delete</ion-item-option>
         </ion-item-options>

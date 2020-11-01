@@ -31,14 +31,11 @@ export class Tab1Page {
         {
           text: "cancel",
           role: "cancel",
-          handler: () => {
-            console.log("cancel");
-          },
+          handler: () => {},
         },
         {
           text: "New List",
           handler: (data) => {
-            console.log(data);
             if (data.title.length === 0) {
               return;
             }

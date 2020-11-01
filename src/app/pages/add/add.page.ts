@@ -15,7 +15,6 @@ export class AddPage implements OnInit {
   constructor(private toDoService: ToDoService, private route: ActivatedRoute) {
     const listId = this.route.snapshot.paramMap.get("listId");
     this.List = this.toDoService.getList(listId);
-    console.log(this.List);
   }
 
   ngOnInit() {}

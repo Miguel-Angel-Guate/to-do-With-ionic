@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
+import { AlertController, IonList } from "@ionic/angular";
 import { Lists } from "src/app/models/models.list";
 import { ToDoService } from "src/app/services/to-do.service";
 
@@ -9,8 +10,13 @@ import { ToDoService } from "src/app/services/to-do.service";
   styleUrls: ["./lists.component.scss"],
 })
 export class ListsComponent implements OnInit {
+  @ViewChild(IonList) listt: IonList;
   @Input() done = true;
-  constructor(public toDoService: ToDoService, private router: Router) {}
+  constructor(
+    public toDoService: ToDoService,
+    private router: Router,
+    private alertCtrl: AlertController
+  ) {}
 
   ngOnInit() {}
   selectedList(list: Lists) {
@@ -22,5 +28,39 @@ export class ListsComponent implements OnInit {
   }
   deleteList(list: Lists) {
     this.toDoService.deleteList(list);
+  }
+  async listEdit(list: Lists) {
+    const alert = await this.alertCtrl.create({
+      header: "Edit list",
+      inputs: [
+        {
+          name: "title",
+          type: "text",
+          value: list.title,
+          placeholder: "name of the the list",
+        },
+      ],
+      buttons: [
+        {
+          text: "cancel",
+          role: "cancel",
+          handler: () => {
+            this.listt.closeSlidingItems();
+          },
+        },
+        {
+          text: "update",
+          handler: (data) => {
+            if (data.title.length === 0) {
+              return;
+            }
+            list.title = data.title;
+            this.toDoService.saveStorage();
+            this.listt.closeSlidingItems();
+          },
+        },
+      ],
+    });
+    alert.present();
   }
 }
