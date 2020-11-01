@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { AlertController } from "@ionic/angular";
-import { strict } from "assert";
 import { ToDoService } from "src/app/services/to-do.service";
 
 @Component({

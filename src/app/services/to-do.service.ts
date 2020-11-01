@@ -17,6 +17,11 @@ export class ToDoService {
     this.saveStorage();
     return newList.id;
   }
+  deleteList(list: Lists) {
+    this.toDo = this.toDo.filter((dataList) => dataList.id !== list.id);
+    this.saveStorage();
+  }
+
   getList(id: number | string) {
     id = Number(id);
     return this.toDo.find((dataList) => {

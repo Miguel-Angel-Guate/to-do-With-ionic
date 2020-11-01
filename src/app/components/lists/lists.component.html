@@ -1,0 +1,12 @@
+<ion-list>
+    <ion-item-sliding *ngFor="let list of toDoService.toDo" detail color="dark">
+        <ion-item color="dark" (click)="selectedList(list)">
+            <ion-label>{{list.title}}</ion-label>
+            <ion-note slot="end" color="success">{{list.items.length}} items</ion-note>
+        </ion-item>
+        <ion-item-options side="end">
+            <ion-item-option (click)="deleteList( list)">Delete</ion-item-option>
+        </ion-item-options>
+    </ion-item-sliding>
+
+</ion-list>

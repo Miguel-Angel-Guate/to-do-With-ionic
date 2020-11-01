@@ -17,17 +17,28 @@
         </ion-item>
     </ion-list>
     <ion-list>
-        <ion-list-header color="dark">
+        <ion-list-header color="dark" *ngIf="List.items.length > 0">
             <ion-label>
                 pending task
             </ion-label>
         </ion-list-header>
-        <ion-item color="dark" *ngFor="let item of List.items">
-            <ion-checkbox slot="start" color="danger" [(ngModel)]="item.done" (ionChange)="changeInThecheck(item)">
-            </ion-checkbox>
-            <ion-label>
-                {{item.description}}
-            </ion-label>
-        </ion-item>
+
+        <ion-item-sliding *ngFor="let item of List.items; let i = index" class="animated fadeInDown">
+            <ion-item color="dark">
+                <ion-checkbox slot="start" color="danger" [(ngModel)]="item.done" (ionChange)="changeInThecheck(item)">
+                </ion-checkbox>
+                <ion-label>
+                    {{item.description}}
+                </ion-label>
+            </ion-item>
+            <ion-item-options side="end">
+                <ion-item-option (click)="delete(i)" color="danger">
+                    <ion-icon slot="icon-only" name="close"></ion-icon>
+                </ion-item-option>
+            </ion-item-options>
+
+        </ion-item-sliding>
+
+
     </ion-list>
 </ion-content>

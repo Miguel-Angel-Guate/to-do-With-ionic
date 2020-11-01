@@ -30,6 +30,20 @@ export class AddPage implements OnInit {
     this.toDoService.saveStorage();
   }
   changeInThecheck(item: itemList) {
-    console.log(item);
+    const pending = this.List.items.filter((itemData) => {
+      return !itemData.done;
+    }).length;
+    if (pending === 0) {
+      this.List.created = new Date();
+      this.List.finish = true;
+    } else {
+      this.List.created = null;
+      this.List.finish = false;
+    }
+    this.toDoService.saveStorage();
+  }
+  delete(i: number) {
+    this.List.items.splice(i, 1);
+    this.toDoService.saveStorage();
   }
 }
